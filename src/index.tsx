@@ -17,6 +17,14 @@ const TiktokAuth = NativeModules.TiktokAuth
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return TiktokAuth.multiply(a, b);
-}
+export const auth = (
+  callback: (code: string, error: boolean | null, errMsg: string) => void
+) => {
+  TiktokAuth.auth((resp) => {
+    if (Platform.OS === 'ios') {
+      callback(resp.code, false, '');
+    } else {
+      callback('', null, '');
+    }
+  });
+};

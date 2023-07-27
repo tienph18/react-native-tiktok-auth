@@ -51,5 +51,23 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+  <array>
+    <string>tiktokopensdk</string>
+    <string>tiktoksharesdk</string>
+    <string>snssdk1180</string>
+    <string>snssdk1233</string>
+  </array>
+  <key>TikTokClientKey</key>
+  <string>aw1gfn90d4rxhevg</string>
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>aw1gfn90d4rxhevg</string>
+      </array>
+    </dict>
+  </array>
 </dict>
 </plist>
