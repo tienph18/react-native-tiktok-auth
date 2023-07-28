@@ -1,18 +1,23 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-tiktok-auth';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { auth } from 'react-native-tiktok-auth';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+    //
   }, []);
+
+  const handlePress = () => {
+    console.log('press auth button');
+    auth((code, error, errMsg) => {
+      console.log('auth callback---', code, error, errMsg);
+    });
+  };
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <TouchableOpacity style={styles.button} onPress={handlePress} />
     </View>
   );
 }
@@ -23,9 +28,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  box: {
+  button: {
     width: 60,
     height: 60,
     marginVertical: 20,
+    backgroundColor: 'red',
   },
 });

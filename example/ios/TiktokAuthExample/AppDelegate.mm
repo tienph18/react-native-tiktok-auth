@@ -1,7 +1,11 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
-#import <TikTokOpenSDKCore/TikTokOpenSDKCore.h>
+//  #import <TikTokOpenSDKCore/TikTokOpenSDKCore-umbrella.h>
+@import TikTokOpenSDKCore;
+// #import "TiktokAuthExample-Bridging-Header.h"
+// #import "TiktokAuth-Bridging-Header.h"
+// #import <TiktokAuthExample/TiktokAuthExample-Bridging-Header.h>
 
 @implementation AppDelegate
 
@@ -16,14 +20,14 @@
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
-    if ([TikTokURLHandler handleOpenURL:url]) {
+    if ([TTKSDKURLHandler handleOpenURL:url]) {
         return YES;
     }
     return NO;
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> *_Nullable))restorationHandler {
-    if ([TikTokURLHandler handleOpenURL:userActivity.webpageURL]) {
+    if ([TTKSDKURLHandler handleOpenURL:userActivity.webpageURL]) {
         return YES;
     }
     return NO;

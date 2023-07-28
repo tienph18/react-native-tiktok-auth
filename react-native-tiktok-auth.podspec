@@ -36,10 +36,11 @@ Pod::Spec.new do |s|
     s.dependency "RCTRequired"
     s.dependency "RCTTypeSafety"
     s.dependency "ReactCommon/turbomodule/core"
-
-    s.dependency "TikTokOpenSDKCore"
-    s.dependency "TikTokOpenAuthSDK"
-    s.dependency "TikTokOpenShareSDK"
    end
   end
+
+  s.dependency "TikTokOpenSDKCore"
+  s.dependency "TikTokOpenAuthSDK"
+  s.dependency "TikTokOpenShareSDK"
+
 end
