@@ -1,20 +1,40 @@
 import Foundation
+import TikTokOpenSDKCore
 import TikTokOpenAuthSDK
 
 @objc(TiktokAuth)
 class TiktokAuth: NSObject {
+  var resolve : RCTPromiseResolveBlock? = nil;
 
   @objc
-    func auth(_ callback: @escaping RCTResponseSenderBlock) {
-      let authRequest = TikTokAuthRequest(
-        scopes: ["user.info.basic"],
-        redirectURI: "https://preview.metafox.app/"
-      )
+    func auth(_ scopes: NSString,
+      redirectUri: NSString,
+      resolver:@escaping RCTPromiseResolveBlock,
+      rejecter:@escaping RCTPromiseRejectBlock
+    )->Void{
+      resolve = resolver;
 
-      DispatchQueue.main.async {
+      let scopesArray:Array = scopes.components(separatedBy: ",");
+      var setScopes: Set<String> = [];
+      let dict = NSMutableDictionary();
+
+      for index in 0 ..< scopesArray.count {
+        setScopes.insert(scopesArray[index])
+      }
+
+      let authRequest = TikTokAuthRequest(scopes: setScopes, redirectURI:redirectUri as String)
+      authRequest.isWebAuth = false
+
+      DispatchQueue.main.sync {
         authRequest.send { response in
           guard let authResponse = response as? TikTokAuthResponse else { return }
-          print("authResponse---", authResponse)
+          dict.setValue(authResponse.errorCode.rawValue, forKey:"errorCode")
+          dict.setValue(authResponse.errorDescription, forKey:"errorMsg")
+          dict.setValue(authResponse.authCode, forKey:"authCode")
+          dict.setValue(scopes, forKey:"grantedPermissions")
+          dict.setValue(authRequest.pkce.codeVerifier, forKey:"codeVerifier")
+          dict.setValue(redirectUri, forKey:"redirectUri")
+          self.resolve?(dict)
         }
       }
     }
