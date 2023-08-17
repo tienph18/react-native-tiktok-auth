@@ -1,4 +1,4 @@
-import { NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform, NativeEventEmitter } from 'react-native';
 
 const LINKING_ERROR =
   `The package 'react-native-tiktok-auth' doesn't seem to be linked. Make sure: \n\n` +
@@ -50,3 +50,16 @@ export const auth = (
     }
   });
 };
+
+export const initClientKey = (key: string) => {
+  if (Platform.OS === 'android') {
+    TiktokAuth.initClientKey(key);
+  }
+};
+
+const addListener = (_listener: string, _event: any) => {};
+
+export const events =
+  Platform.OS === 'android'
+    ? new NativeEventEmitter(TiktokAuth)
+    : { addListener };
