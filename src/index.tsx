@@ -34,19 +34,14 @@ const TiktokAuth = NativeModules.TiktokAuth
       }
     );
 
-export const auth = (
-  callback: (
-    authCode: string,
-    error: TikTokAuthResponseErrorCode,
-    errMsg?: string
-  ) => void
+export const authorize = (
+  scopes: string,
+  redirectUri: string,
+  callback: (resp: ResponseType) => void
 ) => {
-  const scopes = 'user.info.basic';
-  const redirectUri = 'https://preview.metafox.app/';
-
   TiktokAuth.auth(scopes, redirectUri).then(async (resp: ResponseType) => {
     if (resp) {
-      callback(resp.authCode || '', resp.errorCode, resp.errorDescription);
+      callback(resp);
     }
   });
 };
